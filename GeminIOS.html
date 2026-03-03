@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>GeminIOS - Future OS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="desktop">
+        <div class="icon" onclick="openApp('chat')">💬 <span>Chat Global</span></div>
+        <div class="icon" onclick="openApp('editor')">📝 <span>Docs</span></div>
+        <div class="icon" onclick="openApp('code')">💻 <span>Code Studio</span></div>
+        <div class="icon" onclick="openApp('ai')">✨ <span>Gemini AI</span></div>
+
+        <div id="window-container"></div>
+    </div>
+
+    <div id="taskbar">
+        <button class="start-btn">♊</button>
+        <div id="running-apps"></div>
+        <div id="clock"></div>
+    </div>
+
+    <script src="os-logic.js"></script>
+</body>
+</html>
