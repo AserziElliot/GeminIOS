@@ -1,0 +1,59 @@
+:root {
+    --bg-glass: rgba(255, 255, 255, 0.1);
+    --accent: #8e55ff;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    color: white;
+}
+
+#desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 100px);
+    gap: 20px;
+    padding: 20px;
+    height: calc(100vh - 50px);
+}
+
+.icon {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon:hover { transform: scale(1.1); }
+
+.window {
+    position: absolute;
+    width: 600px;
+    height: 400px;
+    background: rgba(15, 15, 25, 0.9);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.window-header {
+    background: var(--accent);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
