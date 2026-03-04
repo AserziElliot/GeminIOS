@@ -1,6 +1,7 @@
 const socket = io();
-const path = require('path'); // Añade esto al principio del archivo
-app.use(express.static(path.join(__dirname, 'public')));
+
+function createWindow(title, contentHtml) {
+    // ... resto del código que ya tienes ...
 // Motor para crear ventanas
 function createWindow(title, contentHtml) {
     const container = document.getElementById('window-container');
