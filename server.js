@@ -2,6 +2,10 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const path = require('path');
+
+// Reemplaza tu línea de app.use(express.static...) por esta:
+app.use(express.static(path.join(__dirname, 'public')));
 
 const app = express();
 app.use(express.static('public'));
