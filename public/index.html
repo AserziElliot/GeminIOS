@@ -2,25 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>GeminIOS - Future OS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeminIOS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="desktop">
-        <div class="icon" onclick="openApp('chat')">💬 <span>Chat Global</span></div>
-        <div class="icon" onclick="openApp('editor')">📝 <span>Docs</span></div>
-        <div class="icon" onclick="openApp('code')">💻 <span>Code Studio</span></div>
-        <div class="icon" onclick="openApp('ai')">✨ <span>Gemini AI</span></div>
-
-        <div id="window-container"></div>
+        <div class="icon" onclick="openChat()">💬 <span>Chat Global</span></div>
+        <div class="icon" onclick="openDocs()">📝 <span>GeminDocs</span></div>
+        <div class="icon" onclick="openCode()">💻 <span>Code Studio</span></div>
+        <div class="icon" onclick="openAI()">✨ <span>Gemini AI</span></div>
     </div>
 
-    <div id="taskbar">
-        <button class="start-btn">♊</button>
-        <div id="running-apps"></div>
-        <div id="clock"></div>
-    </div>
-
+    <script src="/socket.io/socket.io.js"></script>
     <script src="os-logic.js"></script>
 </body>
 </html>
