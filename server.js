@@ -8,10 +8,23 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Configuración de la IA (Render tomará la clave de tus variables de entorno)
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+app.post('/api/ai', async (req, res) => {
+    // Si no hay API KEY, devolvemos una respuesta de simulación
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "") {
+        return res.json({ 
+            text: "(Modo Local) GeminIOS: Todavía no tengo mi cerebro conectado (API Key), pero el sistema operativo funciona correctamente. ¡Configura la clave en Render!" 
+        });
+    }
 
-app.use(express.static('public')); // Esto busca tu index.html dentro de una carpeta llamada 'public'
-app.use(express.json());
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const result = await model.generateContent(req.body.prompt);
+        const response = await result.response;
+        res.json({ text: response.text() });
+    } catch (error) {
+        res.status(500).json({ error: "Error en la conexión con el cerebro de Gemini." });
+    }
+});
 
 // --- ENDPOINT PARA LA IA ---
 app.post('/api/ai', async (req, res) => {
