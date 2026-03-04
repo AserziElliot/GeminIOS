@@ -65,3 +65,40 @@ async function askGemini() {
         responseArea.innerHTML += `<div style="color:red;">Error de conexión.</div>`;
     }
 }
+// Aplicaciones simples
+function openDocs() {
+    createWindow("📝 GeminDocs", `<textarea style="width:100%; height:150px; background:#fff; color:#000; border:none; resize:none;" placeholder="Escribe aquí..."></textarea>`);
+}
+
+function openCode() {
+    createWindow("💻 Code Studio", `<div style="background:#1e1e1e; color:#d4d4d4; padding:10px; font-family:monospace; height:150px; border-radius:4px;">// Editor de código v1.0<br><span style="color:#6a9955;">/* Bienvenido */</span><br><br>> <span style="animation: blink 1s infinite;">_</span></div>`);
+}
+
+function openChat() {
+    createWindow("💬 Chat Global", `<div id="chat-box" style="height:120px; overflow-y:auto; background:rgba(0,0,0,0.3); margin-bottom:10px; padding:5px;"></div><input type="text" placeholder="Escribe..." style="width:100%; background:#222; color:#fff; border:1px solid #444;">`);
+}
+
+// Sistema de arrastre de ventanas (Drag & Drop)
+function makeDraggable(el) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    const header = el.querySelector('.window-header');
+    
+    header.onmousedown = (e) => {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = () => {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        };
+        document.onmousemove = (e) => {
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            el.style.top = (el.offsetTop - pos2) + "px";
+            el.style.left = (el.offsetLeft - pos1) + "px";
+        };
+    };
+}
