@@ -1,62 +1,47 @@
-const socket = io();
-
-// Esta función crea la "cajita" de la aplicación en el escritorio
-function createWindow(title, content) {
-    const container = document.getElementById('window-container');
-    const win = document.createElement('div');
-    win.className = 'window';
-    
-    // Posición aleatoria para que no se amontonen
-    win.style.top = (50 + Math.random() * 100) + "px";
-    win.style.left = (50 + Math.random() * 100) + "px";
-
-    win.innerHTML = `
-        <div class="window-header">
-            <span>${title}</span>
-            <button class="close-btn" onclick="this.closest('.window').remove()">×</button>
-        </div>
-        <div class="window-content">${content}</div>
-    `;
-
-    container.appendChild(win);
+/* Borra todo lo que hay en style.css y pega esto */
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #1a1a2e 0%, #0f0f1b 100%);
+    font-family: sans-serif;
+    color: white;
+    overflow: hidden;
 }
 
-// --- CONFIGURACIÓN DE LAS APPS ---
-
-function openAI() {
-    const aiHtml = `
-        <div class="ai-window">
-            <div id="ai-display" style="height:100px; overflow:auto; color:#0f0; margin-bottom:10px; font-family:monospace;">Ready...</div>
-            <input type="text" id="ai-input" style="width:70%; background:#222; color:white; border:1px solid #444;">
-            <button onclick="sendToGemini()">Enviar</button>
-        </div>
-    `;
-    createWindow("✨ Gemini AI", aiHtml);
+#desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 110px);
+    gap: 20px;
+    padding: 30px;
 }
 
-async function sendToGemini() {
-    const input = document.getElementById('ai-input');
-    const display = document.getElementById('ai-display');
-    const text = input.value;
-    
-    display.innerText = "Pensando...";
-    const res = await fetch('/api/ai', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ prompt: text })
-    });
-    const data = await res.json();
-    display.innerText = data.text;
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
 }
 
-function openDocs() {
-    createWindow("📝 GeminDocs", `<textarea style="width:100%; height:150px; border:none;"></textarea>`);
+.icon-img { font-size: 40px; }
+
+.window {
+    position: absolute;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    min-width: 300px;
+    z-index: 100;
 }
 
-function openChat() {
-    createWindow("💬 Chat Global", `<div style="color:gray;">Buscando conexión...</div>`);
+.window-header {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: move;
 }
 
-function openCode() {
-    createWindow("💻 Code Studio", `<div style="background:#1e1e1e; color:#d4d4d4; padding:10px; font-family:monospace;">// Bienvenido a GeminIOS</div>`);
-}
+.window-content { padding: 15px; }
+
+.close-btn { background: #ff5f56; border: none; color: white; cursor: pointer; }
