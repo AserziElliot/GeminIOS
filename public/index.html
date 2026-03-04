@@ -8,14 +8,27 @@
 </head>
 <body>
     <div id="desktop">
-        <div class="icon" onclick="openChat()">💬 <span>Chat Global</span></div>
-        <div class="icon" onclick="openDocs()">📝 <span>GeminDocs</span></div>
-        <div class="icon" onclick="openCode()">💻 <span>Code Studio</span></div>
-        <div class="icon" onclick="openAI()">✨ <span>Gemini AI</span></div>
+        <div class="icon" onclick="openChat()">
+            <span class="icon-img">💬</span>
+            <span class="icon-label">Chat Global</span>
+        </div>
+        <div class="icon" onclick="openDocs()">
+            <span class="icon-img">📝</span>
+            <span class="icon-label">GeminDocs</span>
+        </div>
+        <div class="icon" onclick="openCode()">
+            <span class="icon-img">💻</span>
+            <span class="icon-label">Code Studio</span>
+        </div>
+        <div class="icon" onclick="openAI()">
+            <span class="icon-img">✨</span>
+            <span class="icon-label">Gemini AI</span>
+        </div>
     </div>
+
+    <div id="window-container"></div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="os-logic.js"></script>
-    <div id="window-container"></div>
 </body>
 </html>
