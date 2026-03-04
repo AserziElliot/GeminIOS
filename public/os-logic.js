@@ -1,11 +1,25 @@
-function openCodeEditor() {
-    const editorHtml = `
-        <div class="editor-container" style="height:100%; display:flex; flex-direction:column;">
-            <div class="toolbar" style="background:#222; padding:5px;">
-                <button onclick="runCode()">▶ Ejecutar</button>
-            </div>
-            <textarea id="code-area" style="flex-grow:1; background:#1e1e1e; color:#00ff00; font-family:monospace; padding:10px; border:none; outline:none;"></textarea>
-        </div>
-    `;
-    // Aquí el código para meter ese HTML en tu ventana flotante...
+const socket = io();
+
+async function openAI() {
+    const promptUser = prompt("♊ GeminIOS AI: ¿Qué quieres saber?");
+    if (!promptUser) return;
+
+    try {
+        const res = await fetch('/api/ai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: promptUser })
+        });
+        const data = await res.json();
+        alert(data.text);
+    } catch (err) {
+        alert("Hubo un error al conectar con la IA.");
+    }
 }
+
+function openChat() {
+    alert("Chat Global iniciado. Revisa la consola (F12) para ver mensajes.");
+}
+
+function openDocs() { alert("GeminDocs cargando..."); }
+function openCode() { alert("Code Studio iniciado..."); }
