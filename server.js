@@ -4,35 +4,22 @@ const { Server } = require('socket.io');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const path = require('path');
 
-// Reemplaza tu línea de app.use(express.static...) por esta:
-app.use(express.static(path.join(__dirname, 'public')));
-
-const app = express();
-app.use(express.static('public'));
+const app = express(); // Primero creamos la app
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Configuración de la IA (Render tomará la clave de tus variables de entorno)
+// Middleware necesario
+app.use(express.json()); 
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Configuración de la IA
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "TU_KEY_AQUI");
+
 app.post('/api/ai', async (req, res) => {
-    // Si no hay API KEY, devolvemos una respuesta de simulación
-    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "") {
-        return res.json({ 
-            text: "(Modo Local) GeminIOS: Todavía no tengo mi cerebro conectado (API Key), pero el sistema operativo funciona correctamente. ¡Configura la clave en Render!" 
-        });
+    if (!process.env.GEMINI_API_KEY) {
+        return res.json({ text: "(Modo Local) Configura la API Key en Render para activar mi cerebro." });
     }
 
-    try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const result = await model.generateContent(req.body.prompt);
-        const response = await result.response;
-        res.json({ text: response.text() });
-    } catch (error) {
-        res.status(500).json({ error: "Error en la conexión con el cerebro de Gemini." });
-    }
-});
-
-// --- ENDPOINT PARA LA IA ---
-app.post('/api/ai', async (req, res) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
         const result = await model.generateContent(req.body.prompt);
@@ -43,17 +30,16 @@ app.post('/api/ai', async (req, res) => {
     }
 });
 
-// --- LÓGICA DEL CHAT EN LÍNEA ---
+// Lógica de Socket.io
 io.on('connection', (socket) => {
-    console.log('Un usuario se ha conectado a GeminIOS');
-    
     socket.on('chat message', (msg) => {
-        io.emit('chat message', msg); // Envía el mensaje a todos los conectados
+        io.emit('chat message', msg);
     });
+});
 
-    socket.on('disconnect', () => {
-        console.log('Usuario desconectado');
-    });
+const PORT = process.env.PORT || 10000;
+server.listen(PORT, () => {
+    console.log(`♊ GeminIOS listo en puerto ${PORT}`);
 });
 
 const PORT = process.env.PORT || 10000;
